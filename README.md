@@ -1,2 +1,2 @@
 # waybar
-my personal waybar theme
+my personal waybar theme, (dwm style)
