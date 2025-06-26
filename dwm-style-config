@@ -1,0 +1,109 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 25,
+  "spacing": 0,
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": [],
+"modules-right": ["custom/ram","custom/sensors","pulseaudio", "network", "battery","clock", "tray"],
+
+  "hyprland/workspaces": {
+    "disable-scroll": false,
+    "all-outputs": true,
+    "format": "{name}",
+    "on-click": "activate"
+  },
+
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 50,
+    "separate-outputs": true
+  },
+
+  "clock": {
+    "interval": 60,
+    "format": "{:%a %b %d %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "BAT {capacity}%",
+    "format-charging": "CHG {capacity}%",
+    "format-plugged": "AC {capacity}%",
+    "format-alt": "{time}",
+    "format-full": "FULL",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "network": {
+    "format-wifi": "{essid} {signalStrength}%",
+    "format-ethernet": "LAN {ipaddr}",
+    "format-linked": "LAN (No IP)",
+    "format-disconnected": "Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}",
+    "on-click": "nm-connection-editor",
+    "on-click-right": "nmcli device wifi rescan"
+  },
+
+  "pulseaudio": {
+    "format": "VOL {volume}%",
+    "format-bluetooth": "BT-VOL {volume}%",
+    "format-bluetooth-muted": "BT-MUTE",
+    "format-muted": "MUTE",
+    "format-source": "MIC {volume}%",
+    "format-source-muted": "MIC-MUTE",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "scroll-step": 5
+  },
+
+
+  // "bluetooth": {
+  //   "format": "BT {status}",
+  //   "format-connected": "BT {device_alias}",
+  //   "format-connected-battery": "BT {device_alias} {device_battery_percentage}%",
+  //   "format-disabled": "BT OFF",
+  //   "format-off": "BT OFF",
+  //   "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+  //   "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+  //   "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+  //   "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+  //   "on-click": "blueman-manager",
+  //   "on-click-right": "rfkill toggle bluetooth"
+  // },
+
+
+"custom/ram": {
+  "interval": 5,
+  "return-type": "json",
+  "exec": "USED=$(free -b | awk '/Mem:/ {printf \"%.1f\", $3/1073741824}'); TOTAL=$(free -b | awk '/Mem:/ {printf \"%.1f\", $2/1073741824}'); echo '{\"text\": \"RAM '$USED' GB\", \"tooltip\": \"Used: '$USED' GB\\nTotal: '$TOTAL' GB\"}'"
+},
+
+"custom/sensors": {
+  "interval": 5,
+  "return-type": "json",
+  "exec":"CPU_RAW=$(cat /sys/class/hwmon/hwmon4/temp1_input); CPU=$(awk 'BEGIN {printf \"%.1f\", '$CPU_RAW'/1000}'); CLASS=$(awk 'BEGIN {if ('$CPU_RAW' < 50000) print \"cool\"; else if ('$CPU_RAW' < 70000) print \"warm\"; else print \"hot\"}'); GPU=$(awk '{printf \"%.1f\", $1/1000}' /sys/class/hwmon/hwmon3/temp1_input); NVME=$(awk '{printf \"%.1f\", $1/1000}' /sys/class/hwmon/hwmon2/temp3_input); BAT=$(cat /sys/class/power_supply/BAT0/temp 2>/dev/null || echo 'N/A'); ADP=$(cat /sys/class/power_supply/ADP1/online 2>/dev/null); ADP_STATUS=$(if [ \"$ADP\" = \"1\" ]; then echo 'Online'; else echo 'Offline'; fi); echo '{\"text\": \"CPU '$CPU'°C\", \"tooltip\": \"CPU: '$CPU'°C\\nGPU: '$GPU'°C\\nNVMe: '$NVME'°C\\nBattery Temp: '$BAT'\\nAC Adapter: '$ADP_STATUS'\", \"class\": \"'$CLASS'\"}'"
+},
+
+
+
+
+
+  "tray": {
+    "spacing": 10
+  }
+}
