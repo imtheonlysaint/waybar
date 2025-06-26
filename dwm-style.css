@@ -1,0 +1,107 @@
+@import '../../.config/waybar/wallust/colors-waybar.css';
+@define-color color3-alpha rgba(40, 39, 35, 0.2);
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  transition: none;
+  
+}
+
+window#waybar {
+  background-color: @color1;
+  color: @foreground;
+  
+;
+}
+
+.module {
+  padding: 0 12px;
+  margin: 0 2px;
+  color: @foreground;
+  
+}
+
+#workspaces {
+  background: @color0;
+  margin: 0;
+  padding: 0;
+}
+
+#workspaces button {
+  padding: 0 12px;
+  margin: 0;
+  background: @color0;
+  color: @foreground;
+  border: none;
+  min-height: 30px;
+}
+
+#workspaces button.active {
+  background: @color3;
+  color: @foreground;
+}
+
+#workspaces button.urgent {
+  background: @color11;
+  color: @foreground;
+}
+
+#window {
+  background: @color5;
+  color: @foreground;
+  padding: 0 12px;
+  margin: 0;
+}
+
+#pulseaudio,
+#network,
+#bluetooth,
+#battery,
+#custom-ram,
+#cusotom-sensors,
+#clock,
+#tray {
+  color: @color6;
+  padding: 0 12px;
+  margin: 0 2px;
+}
+
+
+#pulseaudio.muted,
+#network.disconnected,
+#battery.critical:not(.charging) {
+  color: @foreground;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: @foreground;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+  color: @color7;
+} 
+
+#tray {
+  padding: 0 8px;
+}
+
+#custom-sensors.cool {
+  color: @color6;
+}
+
+#custom-sensors.warm {
+ color: @color6;
+}
+
+#custom-sensors.hot {
+   color: @color6;
+}
